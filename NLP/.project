@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>NLP</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>My java package</name>
+			<type>2</type>
+			<location>D:/Project/NLP/nlp/My java package</location>
+		</link>
+		<link>
+			<name>edl</name>
+			<type>2</type>
+			<location>D:/Project/NLP/nlp/edl</location>
+		</link>
+		<link>
+			<name>ner</name>
+			<type>2</type>
+			<location>D:/Project/NLP/nlp/ner</location>
+		</link>
+		<link>
+			<name>seg</name>
+			<type>2</type>
+			<location>D:/Project/NLP/nlp/seg</location>
+		</link>
+		<link>
+			<name>stanford_source</name>
+			<type>2</type>
+			<location>D:/Project/NLP/nlp/stanford_source</location>
+		</link>
+	</linkedResources>
+</projectDescription>
