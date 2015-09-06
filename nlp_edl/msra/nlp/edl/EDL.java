@@ -30,6 +30,12 @@ public class EDL
 	protected static List<List<String>> aliasList = new ArrayList<>();
 	protected static Map<String, List<Integer>> aliasMap = new HashMap<>();
 	
+	private List<Map<String, Object>> mentions = null; // all ordered mentions extracted from current document
+	
+	float alpha = 1; // weight of type scorer ralated to name scorer
+	float belta = 1; // weight of context scorer related to candidate scorer(combination of name and type score)
+	
+	
 	
 	Query query = new QueryByStanford();
 	
@@ -170,6 +176,31 @@ public class EDL
 		return scorePairs;
 	}
 	
+	public List<Pair<Float, Integer>> NameScore(String mention, int candidateNum)
+	{
+		List<Float> scores = new ArrayList<>(kb.GetSize());
+		List<String> alias = new ArrayList<>(kb.GetSize()); 
+		float score = 0;
+		float maxScore = 0;
+		
+		for(int i=0;i<kb.GetSize();i++)
+		{
+			maxScore = 0;
+			String title = kb.GetName(i);
+			for(String alia:alias)
+			{
+				score = GetWordSimilarity(alia,title);
+				if(score>maxScore)
+				{
+					maxScore = score;
+				}
+			}
+			scores.add(maxScore);
+		}
+		List<Pair<Float, Integer>> scorePairs = Sort.sort(scores,Order.descend);
+		return scorePairs.subList(0, candidateNum);
+	}
+	
 	public static float GetWordSimilarity(String mention,String title)
 	{
 		
@@ -262,6 +293,62 @@ public class EDL
 
 	//				ContextScore
 	
+	public Float ContextScore(int mentionIndex, int entityIndex)
+	{
+		return null;
+	}
+	
+	//				Entity discovery and linking
+	
+	/**
+	 * discover mentions in a raw text and link them to the freebase.
+	 * This function return a list of Map, with a map contains information of a mention and
+	 * its linked entity, fields of a map include:
+	 * mention_id: the unique id of a mention
+	 * name:	the name of the mention
+	 * type:	the type of the mention
+	 * docid:	the name of the document from which the mention extracted
+	 * begin:	the offset of the first word of the mention in the document
+	 * end:		the offset of the last word of the mention in the document
+	 * 
+	 * @param text
+	 * 			The raw text of the document 
+	 * @param docID
+	 * 			The id of the document, in usually is the name of the document without suffix
+	 * @return
+	 */
+	public List<Map<String, String>> EntityDiscoverAndLink(String text,String docID)
+	{
+		this.mentions = ExtractMention(text, docID);
+		List<Map<String, String>> linkedMentions = new ArrayList<>();
+		int maxCandidate = 50; // decide the maximal candidate number
+		List<Pair<Integer, Float>> candidates; // candidate pairs
+		float contextScore = 0; // the score get by context scorer
+		float score = 0;
+		for(int i=0;i<this.mentions.size();i++) // for each mention
+		{
+			candidates = SelectCandidate(i);
+			for(Pair<Integer, Float> candidate:candidates) // for each candidate
+			{
+				contextScore = ContextScore(i,candidate.first);
+				score = candidate.second+this.belta*contextScore;
+			}
+		}
+		return linkedMentions;
+	}
+	
+	/**
+	 * select candidates from freebase for a mention
+	 * @param mentionIndex
+	 * 			The index of the queried mentions extracted from the input document
+	 * @return
+	 * 			A list of pairs of candidate entity index(first) and score(second)
+	 */
+	private List<Pair<Integer, Float>> SelectCandidate(int mentionIndex) 
+	{
+		return null;
+	}
+
 	
 	
 	public static void main(String args[])
