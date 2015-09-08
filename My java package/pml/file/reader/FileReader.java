@@ -8,6 +8,7 @@ import java.util.List;
 
 import edu.stanford.nlp.ling.CoreAnnotations.MarkingAnnotation;
 import pml.file.FileException;
+import pml.file.ReadModel;
 
 public interface FileReader 
 {
@@ -98,6 +99,54 @@ public interface FileReader
 	 */
 	public String Read() throws FileException;
 	
+	
+	/**
+	 * read string whose first character offset is beginIndex and last character offset is endIndex(excluded)
+	 * The offset is counted from the begin of the document and the first character offset of the document is 0.
+	 * Note: This method will reset the read pointer position and not return back.
+	 * @param beginIndex
+	 * 					Integer offset of the first character related to the beginning of the document
+	 * @param endIndex
+	 * 					Integer offset+1 of the last character related to the beginning of the document
+	 * @return
+	 * @throws FileException
+	 */
+	public default String Read(int beginIndex, int endIndex) throws FileException
+	{
+		return null;
+		
+	}
+	
+	/**
+	 * read string whose first character offset is beginIndex and last character offset is endIndex(excluded) related to given position
+	 * The offset is counted from the begin of the document or current position.
+	 *  The first character offset of the document is labeled 0;
+	 *  Current position is labeled 0;
+	 *  Note: This method will reset the read pointer position and not return back.
+	 *  	
+	 *  	Example: 
+	 *  		Given document: "I like java"
+	 *  		Given current position: 4(k)
+	 *  		Read(3,5,0) is "ik"
+	 *  		Read(3,5,1) is "ja"
+	 *  
+	 * @param beginIndex
+	 * 					Integer offset of the first character related to the beginning of the document
+	 * @param endIndex
+	 * 					Integer offset+1 of the last character related to the beginning of the document
+	 * @param readModel:
+	 * 					Decide the related position of the read pointer. 
+	 * 					0 or ReadModel.Beg: beginning of the document
+	 * 					1 or ReadModel.Cur: current postion of the reader
+	 * @return
+	 * @throws FileException
+	 */
+	public default String Read(int beginIndex, int endIndex, ReadModel readModel) throws FileException
+	{
+		return null;
+
+	}
+	
 	public Object Scan(Object object);
 	
 	public Object Scan(Object object, String delimer);
@@ -151,5 +200,26 @@ public interface FileReader
 		return lines;
 	}
 
+	
+	/**
+	 * return current position of the reader pointer
+	 */
+	public default Integer pTell() throws FileException
+	{
+		return null;
+		
+	}
+	
+	
+	/**
+	 * reset the current position of the reader pointer to the given index
+	 * @param index
+	 * 				Destinate position of the reader pointer
+	 */
+	public default void  pSet() throws FileException
+	{
+		
+	}
+	
 
 }

@@ -1,13 +1,10 @@
 package pml.file.writer;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -227,22 +224,7 @@ public class LargeFileWriter implements FileWriter
 	{
 		if(this.bufferedWriter==null)
 		{
-			if(IsFile())
-			{
-				Open();
-			}
-			else
-			{
-				if(this.file!=null)
-				{
-					throw new FileException(file.toString()+" is an invalid file path!");
-				}
-				else
-				{
-					throw new FileException("No File appointed For Reading!");
-				}
-			}
-	
+			Open();
 		}
 		try
 		{
@@ -261,21 +243,7 @@ public class LargeFileWriter implements FileWriter
 	{
 		if(this.bufferedWriter==null)
 		{
-			if(IsFile())
-			{
-				Open();
-			}
-			else
-			{
-				if(this.file!=null)
-				{
-					throw new FileException(file.toString()+" is an invalid file path!");
-				}
-				else
-				{
-					throw new FileException("No File appointed For Reading!");
-				}
-			}
+			Open();
 		}
 		try
 		{

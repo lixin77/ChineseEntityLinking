@@ -150,17 +150,17 @@ public class Util
 		{
 			if(withSuffix)
 			{
-				return path.substring(path.lastIndexOf("/"));
+				return path.substring(path.lastIndexOf("/")+1);
 			}
 			else
 			{
 				try
 				{
-					return path.substring(path.lastIndexOf("/"),path.lastIndexOf("."));
+					return path.substring(path.lastIndexOf("/")+1,path.lastIndexOf("."));
 				}
 				catch(Exception exception)
 				{
-					return path.substring(path.lastIndexOf("/"));
+					return path.substring(path.lastIndexOf("/")+1);
 				}
 			}
 		}
@@ -168,17 +168,17 @@ public class Util
 		{
 			if(withSuffix)
 			{
-				return path.substring(path.lastIndexOf("\\"));
+				return path.substring(path.lastIndexOf("\\")+1);
 			}
 			else
 			{
 				try
 				{
-					return path.substring(path.lastIndexOf("\\"),path.lastIndexOf("."));
+					return path.substring(path.lastIndexOf("\\")+1,path.lastIndexOf("."));
 				}
 				catch(Exception exception)
 				{
-					return path.substring(path.lastIndexOf("\\"));
+					return path.substring(path.lastIndexOf("\\")+1);
 				}
 			}
 		}
