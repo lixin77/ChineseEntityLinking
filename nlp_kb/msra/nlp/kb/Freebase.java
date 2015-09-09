@@ -200,7 +200,7 @@ public class Freebase implements KnowledgeBase
 	}
 
 	//			Get freebase by id
-	public String GetName(Object id) 
+	public String GetName(String id) 
 	{
 		int index = id2index.get(id);
 		return names.get(index);
@@ -310,5 +310,23 @@ public class Freebase implements KnowledgeBase
 	public List<Map<String, Object>> GetEntities()
 	{
 		return entities;
+	}
+
+	@Override
+	public java.lang.String GetName(Object entityLabel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public java.lang.String GetText(Object entityLabel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer GetIndex(Object id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
