@@ -69,10 +69,10 @@ public class StanfordNer implements Ner
 	 * 					"Answer" : the mention type
 	 */				
 	@Override
-	public List<Map<String, String>> NerText(String segedText) throws NerException 
+	public List<Map> NerText(String segedText) throws NerException 
 	{
 		Map<String, String> map;
-		List<Map<String, String>> maps = new ArrayList<>();
+		List<Map> maps = new ArrayList<>();
 		
 		for (List<CoreLabel> lcl : classifier.classify(segedText))
 		{
@@ -103,11 +103,11 @@ public class StanfordNer implements Ner
 	 * @throws FileException
 	 */
 	@Override
-	public List<Map<String, String>> NerFile(String filePath) throws NerException {
+	public List<Map> NerFile(String filePath) throws NerException {
 		FileReader reader = new LargeFileReader(filePath,StandardCharsets.UTF_8);
 		String passage = reader.ReadAll();
 		reader.Close();
-		List<Map<String, String>> maps =  (List<Map<String, String>>) NerText(passage);
+		List<Map> maps =  NerText(passage);
 		return maps;
 	}
 	

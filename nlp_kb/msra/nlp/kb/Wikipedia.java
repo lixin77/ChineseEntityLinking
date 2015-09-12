@@ -62,6 +62,26 @@ public class Wikipedia
 	{
 		return null;
 	}
+
+	public List<String> GetLinkedInAnchors(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Pair<String, String>> GetAmbigItems(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<String> GetAmbigTitles(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<String> GetRedirectedTitles(String title) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

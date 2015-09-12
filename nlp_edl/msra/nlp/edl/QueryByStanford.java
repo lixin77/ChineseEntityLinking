@@ -42,17 +42,17 @@ public class QueryByStanford implements Query
 	 * 		A list of Maps, each corresponding a query.
 	 */
 	@Override
-	public List<Map<String, String>> QueryText(String text, String docID) 
+	public List<Map> QueryText(String text, String docID) 
 	{
-		List<Map<String, String>> maps = new ArrayList<>();
-		List<Map<String, String>> ms = new ArrayList<>();
+		List<Map> maps = new ArrayList<>();
+		List<Map> ms = new ArrayList<>();
 		
 		maps =  MergeNerResult(ner.NerText(seg.SegText(text),text));
-		for(Map<String, String> map : maps)
+		for(Map map : maps)
 		{
-			if(IsMention(map.get("Answer")))
+			if(IsMention((String)map.get("Answer")))
 			{
-				Map<String, String> m = new HashMap<>();
+				Map m = new HashMap<>();
 				m.put(name, map.get("OriginalText"));
 				m.put(type, map.get("Answer"));
 				m.put(docid, docID);
@@ -67,7 +67,7 @@ public class QueryByStanford implements Query
 
 	@Override
 	public void QueryText(String text, String docID, String desPath) {
-		List<Map<String, String>> maps = QueryText(text, docID);
+		List<Map> maps = QueryText(text, docID);
 		FileWriter writer = new LargeFileWriter(desPath);
 		for(Map<String,String>map :maps)
 		{
@@ -87,17 +87,17 @@ public class QueryByStanford implements Query
 	}
 
 	@Override
-	public List<Map<String, String>> QueryFile(String sourcePath, String docID)
+	public List<Map> QueryFile(String sourcePath, String docID)
 	{
 		FileReader reader = new LargeFileReader(sourcePath);
 		String text = reader.ReadAll();
 		reader.Close();
-		List<Map<String, String>> maps = QueryText(text, docID);
+		List<Map> maps = QueryText(text, docID);
 		return maps;
 	}
 	
 	@Override
-	public List<Map<String, String>> QueryFile(String sourcePath)
+	public List<Map> QueryFile(String sourcePath)
 	{
 		
 		String docID;
@@ -106,7 +106,7 @@ public class QueryByStanford implements Query
 		} catch (FileException e) {
 			throw new EdlException(e.getCause());
 		}
-		List<Map<String, String>> maps = QueryFile(sourcePath, docID);
+		List<Map> maps = QueryFile(sourcePath, docID);
 		return maps;
 	}
 	
@@ -127,7 +127,7 @@ public class QueryByStanford implements Query
  	 * @return
  	 * 					A list of maps after merged.
  	 */
- 	public List<Map<String, String>> MergeNerResult(List<Map<String, String>> maps)
+ 	public List<Map> MergeNerResult(List<Map> maps)
  	{
  		// Check if input is null
  		if(maps.isEmpty())
@@ -136,14 +136,14 @@ public class QueryByStanford implements Query
  		}
  		
  		String lastType = "",curType="";
- 		Map<String, String> lastMap = null;
- 		 List<Map<String, String>> list = new ArrayList<>();
+ 		Map lastMap = null;
+ 		 List<Map> list = new ArrayList<>();
 
  		/*lastMap = maps.get(0);
  		lastType = lastMap.get("Answer");*/
- 		for(Map<String, String>map :maps)
+ 		for(Map map :maps)
  		{
- 			curType = map.get("Answer");
+ 			curType = (String) map.get("Answer");
  			if(curType.equals(lastType))
  			{
  				lastMap = Merge(lastMap,map); 				
@@ -155,7 +155,7 @@ public class QueryByStanford implements Query
  					list.add(lastMap);
  				}
  				lastMap = map;
- 				lastType = lastMap.get("Answer");
+ 				lastType = (String) lastMap.get("Answer");
  			}			
  		}
  		list.add(lastMap);
@@ -175,7 +175,7 @@ public class QueryByStanford implements Query
 	 * 					"DistSim" : ?
 	 * 					"Answer" : the mention type
 	 */				
- 	public Map<String, String>  Merge(Map<String,String> lastMap,Map<String,String> curMap)
+ 	public Map  Merge(Map<String,String> lastMap,Map<String,String> curMap)
  	{
  		Map<String,String> map = lastMap;
  		map.put("Value", lastMap.get("Value")+curMap.get("Value"));
